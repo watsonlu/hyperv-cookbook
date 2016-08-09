@@ -5,28 +5,38 @@ This cookbook allows you to handle basic hyper-v operations using chef
 
 ###Recipes and Attributes
 
+###Create Recipe
+
+The Create recipe accepts a hash of VM's to create using the following attributes:
+
+Your attributes should look something like this:
+
+Example run_list:
+
+```
+switch "my virtual switch",
+vm_list = [
+  {
+    "name" => "TestVM1",
+    "memory" => "8GB",
+    "vhd" => "C:\\\\disk.vhd"
+  },
+  {
+    "name" => "TestVM2",
+    "memory" => "8 GB",
+    "vhd" => "C:\\disk2.vhd"
+  }
+]
+```
+The recipe will loop through each VM in the VM_List and create that VM. It will not start the VM's, use the start recipe for that.
+
+###Start Recipe
+
+Starts the VM that is in the "name" attribute.
+
 ```
 node["hyperv"]["name"]
 ```
-Used by all operations. This is the name of the VM.
-
-###Create Recipe
-
-Create a VM and attach a VHD. Does not start automatically.
-
-All of the following attributes are required for create:
-
-```
-//The memory the machine starts with
-node["hyperv"]["create"][memory]
-//The path to the VHD on the local machine
-node["hyperv"]["create"][vhd]
-//The name of the VM's switch
-node["hyperv"]["create"][switch]
-```
-###Start Recipe
-
-Starts the VM that is in the "name" attribute. No attributes required other than "name".
 
 ###Stop Recipe
 
@@ -34,20 +44,20 @@ Stops the VM with the "name" attribute. No attributes required other than "name"
 
 You can set the "name" attribute to "*" to stop all VM's, or "Name*" to stop some VM's.
 
+```
+node["hyperv"]["name"]
+```
+
 ###Remove Recipe
 
-No attributes required other than "name". This does not delete the VHD, it only removes the VM from the host. The VHD is still in the same location, you'll have to delete it manually.
+No attributes required other than "name". This does not delete the VHD, it only removes the VM from the host. The VHD is still in the same location, you'll have to delete it another way.
+```
+node["hyperv"]["name"]
+```
 
 ###Shutdown Recipe
 
 Shut's down any VM with the "name" attribute. You can set ["hyperv"]["shutdown"]["force"] to "true" to have it force a shutdown, otherwise it will shudown slowly in the guest.
-
-##Example
-
-Creating a VM
 ```
-node["hyperv"]["create"][memory] = "8 GB"
-node["hyperv"]["create"][vhd] = "C:\\My\\VHD.vhd"
-node["hyperv"]["create"][switch] = "MySwitchName"
-include_recipe[hyperv-cookbook::create]
+node["hyperv"]["name"]
 ```
