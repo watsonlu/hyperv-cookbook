@@ -19,9 +19,19 @@ suites:
     attributes:
       hyperv:
         name: "TestVM"
+        switch: "VLAN.Trunk.Virtual"
         create:
-          memory: "8GB"
-          vhd: "C:\\HyperVDisquettes\\disk.vhd"
-          switch: "aVM"
+          vm_list = [
+            {
+              "name" => "TestVM1",
+              "memory" => "8GB",
+              "vhd" => "C:\\Hyper-V\\HVTest\\disk.vhd"
+            },
+            {
+              "name" => "TestVM2",
+              "memory" => "8 GB",
+              "vhd" => "C:\\Hyper-V\\HVTest\\disk.vhd"
+            }
+          ]
         shutdown:
           force: true
