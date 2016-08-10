@@ -1,14 +1,13 @@
 vm_list = node["hyperv"]["vm_list"]
-source_vhd = ndoe["hyperv"]["source_vhd"]
 
 
 
 vm_list.each do |item|
 
   if !source_vhd.to_s.empty? then
-    remote_file "Copy source file to destination" then
+    remote_file "Copy source file to destination" do
       path item.destination_vhd
-      source source_vhd
+      source item.source_vhd
       action :create
     end
   end
