@@ -1,22 +1,23 @@
-vm_list = node["hyperv"]["vm_list"]
-source_vhd = ndoe["hyperv"]["source_vhd"]
+def copy_with_path(src, dst)
+  FileUtils.mkdir_p(File.dirname(dst))
+  FileUtils.cp(src, dst)
+end
 
+node["hyperv"]["machines"].each do |virtualmachine|
+  log virtualmachine
 
-
-vm_list.each do |item|
-
-  if !source_vhd.to_s.empty? then
-    remote_file "Copy source file to destination" then
-      path item.destination_vhd
-      source source_vhd
-      action :create
-    end
+  if Pathname.new(virtualmachine.destination_vhd).file? then
+    log "VHD already exists, skipping (#{virtualmachine.destination_vhd})"
+    next
+  end
+  if !virtualmachine.source_vhd.to_s.empty? then
+    copy_with_path(virtualmachine.source_vhd, virtualmachine.destination_vhd)
   end
 
   powershell_script "create a vm" do
     code <<-EOH
-  New-VM -Name "#{item.name}" -MemoryStartupBytes #{item.memory} -SwitchName "#{node["hyperv"]["switch"]}" -VHDPath "#{item.destination_vhd}"
+  New-VM -Name "#{virtualmachine.name}" -MemoryStartupBytes #{virtualmachine.memory} -SwitchName "#{node["hyperv"]["switch"]}" -VHDPath "#{virtualmachine.destination_vhd}" -Path "#{File.dirname(virtualmachine.destination_vhd)}"
   EOH
   end
-
 end
+node.rm("hyperv", "machines")

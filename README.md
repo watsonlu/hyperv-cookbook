@@ -52,7 +52,17 @@ node["hyperv"]["name"]
 
 ###Remove Recipe
 
-No attributes required other than "name". This does not delete the VHD, it only removes the VM from the host. The VHD is still in the same location, you'll have to delete it another way.
+No attributes required other than "name". This will not delete the VHD
+```
+node["hyperv"]["name"]
+```
+
+###Remove Recipe
+
+No attributes required other than "name". This will remove the VM and its associated VHD so be careful.
+
+Use ::Remove if you just want to remove it from hyperv and keep the data
+
 ```
 node["hyperv"]["name"]
 ```

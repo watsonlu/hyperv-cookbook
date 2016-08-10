@@ -1,5 +1,5 @@
-powershell_script "start a vm" do
+powershell_script "Remove a VM but leave the data" do
   code <<-EOH
-Start-VM -Name "#{node["hyperv"]["name"]}"
-EOH
+    Remove-VM -Name "#{node["hyperv"]["name"]}" -Force
+  EOH
 end
