@@ -19,11 +19,13 @@ vm_list = [
   {
     "name" => "TestVM1",
     "memory" => "8GB",
-    "vhd" => "C:\\\\disk.vhd"
+    "source_vhd" => "http:// or C:\",
+    "destination_vhd" => "C:\\\\disk.vhd"
   },
   {
     "name" => "TestVM2",
     "memory" => "8 GB",
+    "source_vhd" => "http:// or C:\",
     "vhd" => "C:\\disk2.vhd"
   }
 ]

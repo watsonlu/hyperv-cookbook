@@ -25,7 +25,8 @@ suites:
             {
               "name" => "TestVM1",
               "memory" => "8GB",
-              "vhd" => "C:\\Hyper-V\\HVTest\\disk.vhd"
+              "source_vhd" => "http://qwewqe"
+              "destination_vhd" => "C:\\Hyper-V\\HVTest\\disk.vhd"
             },
             {
               "name" => "TestVM2",
