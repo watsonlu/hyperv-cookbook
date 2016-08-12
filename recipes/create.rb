@@ -5,7 +5,6 @@ node["hyperv"]["machines_to_create"].each do |virtualmachine|
     path parent_dir
     recursive true
     :create
-    not_if directory_exists?(parent_dir)
   end
 
   if Pathname.new(virtualmachine.destination_vhd).file? then
