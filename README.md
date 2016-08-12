@@ -52,8 +52,9 @@ node["hyperv"]["name"]
 
 ###Remove Recipe
 
-No attributes required other than "name". This does not delete the VHD, it only removes the VM from the host. The VHD is still in the same location, you'll have to delete it another way.
+No attributes required other than "name". Set "Destroy" to "True" and it will delete the vhd as well
 ```
+node["hyperv"]["remove"]["destroy"] = "true"
 node["hyperv"]["name"]
 ```
 
