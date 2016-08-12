@@ -52,9 +52,18 @@ node["hyperv"]["name"]
 
 ###Remove Recipe
 
-No attributes required other than "name". Set "Destroy" to "True" and it will delete the vhd as well
+No attributes required other than "name". This will not delete the VHD
 ```
-node["hyperv"]["remove"]["destroy"] = "true"
+node["hyperv"]["name"]
+```
+
+###Remove Recipe
+
+No attributes required other than "name". This will remove the VM and its associated VHD so be careful.
+
+Use ::Remove if you just want to remove it from hyperv and keep the data
+
+```
 node["hyperv"]["name"]
 ```
 
