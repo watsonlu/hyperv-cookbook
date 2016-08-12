@@ -1,5 +1,5 @@
 name "hyperv-cookbok"
-version "0.0.2"
+version "0.0.5"
 maintainer "Luke Watson"
 maintainer_email "luwatson90@gmail.com"
 source_url "https://github.com/watsonlu/hyperv-cookbook"

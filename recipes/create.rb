@@ -1,20 +1,24 @@
-vm_list = node["hyperv"]["vm_list"]
+node["hyperv"]["machines_to_create"].each do |virtualmachine|
+  log virtualmachine
+  parent_dir = File.dirname(virtualmachine.destination_vhd)
+  directory 'Create the source directory' do
+    path parent_dir
+    recursive true
+    :create
+    not_if directory_exists?(parent_dir)
+  end
 
-
-
-vm_list.each do |item|
-
-  if !source_vhd.to_s.empty? then
-    remote_file "Copy source file to destination" do
-      path item.destination_vhd
-      source item.source_vhd
-      action :create
-    end
+  if Pathname.new(virtualmachine.destination_vhd).file? then
+    log "VHD already exists, skipping (#{virtualmachine.destination_vhd})"
+    next
+  end
+  if !virtualmachine.source_vhd.to_s.empty? then
+    FileUtils.cp(virtualmachine.source_vhd, virtualmachine.destination_vhd)
   end
 
   powershell_script "create a vm" do
     code <<-EOH
-  New-VM -Name "#{item.name}" -MemoryStartupBytes #{item.memory} -SwitchName "#{node["hyperv"]["switch"]}" -VHDPath "#{item.destination_vhd}"
+  New-VM -Name "#{virtualmachine.name}" -MemoryStartupBytes #{virtualmachine.memory} -SwitchName "#{node["hyperv"]["switch"]}" -VHDPath "#{virtualmachine.destination_vhd}"
   EOH
   end
 
